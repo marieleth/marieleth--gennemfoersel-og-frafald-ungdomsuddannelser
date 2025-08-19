@@ -1,1 +1,1 @@
-# Marie Leth Hansen - Gennemførsel og frafald på danske ungdomsuddannelser
+# Marie Leth - Gennemførsel og frafald på danske ungdomsuddannelser
