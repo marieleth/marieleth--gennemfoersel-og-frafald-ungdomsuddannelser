@@ -103,10 +103,10 @@ write.csv2(kort_data, "Power BI, analyse 1b Danmarkskort.csv", row.names = FALSE
 print("Fil gemt som: Power BI, analyse 1b Danmarkskort.csv")
 
 ##-----------------------------------------------------------------------------------------##
-###ANALYSE 1C: Landsgennemsnit på frafaldsprocent, Odenses placering ift. resterende kommuner og top-10 og bund-10 kommuner 
+###ANALYSE 1C: LANDSGENNEMSNIT af FRAFALDSPROCENT, ODENSES PLACERING IFT. RESTERENDE KOMMUNER SAMT TOP-10 OG BUND-10 KOMMUNER
 
 
-#Del 1:ANALYSE
+#Del 1:Landsgennemsnit af frafaldsprocent
 #Beregner landsgennemsnittet af frafaldsprocenten, NA-værdier ignoreres
 gennemsnit_frafald <- mean(Analyse_1_datasæt$afbrudt_procent, na.rm = TRUE)
 
@@ -119,14 +119,13 @@ odense_frafald <- Analyse_1_datasæt$afbrudt_procent[odense_række]
 odense_frafald_pct <- odense_frafald * 100
 print(paste("Odenses frafaldsprocent:", round(odense_frafald_pct, 2), "%"))
 
-#Del 2:ANALYSE
-#Beregning Odenses placering (rang)
+#Del 2:Beregning Odenses placering (rang)
 #Sortér alle kommuner efter frafaldsprocent (højeste først)
 sorteret_frafald <- sort(Analyse_1_datasæt$afbrudt_procent, decreasing = TRUE, na.last = NA)
 odense_placering <- which(sorteret_frafald == odense_frafald)
 print(paste("Odenses placering:", odense_placering))
 
-#Del 3:ANALYSE + KLARGØRING AF DATA TIL POWER BI
+#Del 3:Top-10 og bund-10 kommuner 
 #Beregning af top-10 og bund-10 af kommuner ud fra frafaldsprocent
 top_10_højest <- Analyse_1_datasæt[order(Analyse_1_datasæt$afbrudt_procent, decreasing = TRUE), ][1:10, ]
 top_10_lavest <- Analyse_1_datasæt[order(Analyse_1_datasæt$afbrudt_procent, decreasing = FALSE), ][1:10, ]
@@ -146,3 +145,93 @@ write.csv2(top_10_lavest[, c(3, 11)], "Power BI, analyse 1c bund-10 lavest frafa
 print("Filer gemt som:")
 print("Power BI, analyse 1c top-10 højest frafald.csv")
 print("Power BI, analyse 1c bund-10 lavest frafald.csv")
+
+##-----------------------------------------------------------------------------------------##
+###ANALYSE 2: PROCENTVISE FORDELING AF FULDFØRTE, AFBRUDTE OG IGANGVÆRENDE STUDERENDE I 2024 I ODENSE PÅ HHV. GYMNASIAL UDDANNELSE OG ERHVERVSFAGLIG UDDANNELSE
+
+##HENTE DATA##
+library(readr)
+Analyse_2_datasæt <- read_csv("C:/Users/m_han/Desktop/Job/GitHub/Analyse af gennemførsel og frafald på danske ungdomsuddannelser – med Odense i fokus/Analyser/Analyse 2/Analyse 2 - datasæt, rå.csv",
+                              locale = locale())
+View(Analyse_2_datasæt)
+
+##TILRETTELÆGGE DATA##
+#Omdøb kolonner
+names(Analyse_2_datasæt) <- c("Kommune", "Aar", "Status", 
+                              "Gymnasiale_uddannelser", 
+                              "Erhvervsfaglige_grundforloeb", 
+                              "Erhvervsfaglige_uddannelser")
+
+#Sikre at data behandles som tal og ikke tekst 
+Analyse_2_datasæt$Gymnasiale_uddannelser <- as.numeric(Analyse_2_datasæt$Gymnasiale_uddannelser)
+Analyse_2_datasæt$Erhvervsfaglige_grundforloeb <- as.numeric(Analyse_2_datasæt$Erhvervsfaglige_grundforloeb)
+Analyse_2_datasæt$Erhvervsfaglige_uddannelser <- as.numeric(Analyse_2_datasæt$Erhvervsfaglige_uddannelser)
+
+#Opret samlet kategori for erhvervsfaglig uddannelse
+Analyse_2_datasæt$Erhvervsfaglig_samlet <- Analyse_2_datasæt$Erhvervsfaglige_grundforloeb +
+                                           Analyse_2_datasæt$Erhvervsfaglige_uddannelser
+
+
+##ANALYSE##
+#Udregn totale antal på gymnasiale uddannelse samt erhvervsfaglige uddannelse. Rækkerne summeres for at finde samlet antal.
+gymnasial_total <- sum(Analyse_2_datasæt$Gymnasiale_uddannelser, na.rm = TRUE)
+erhvervsfaglig_total <- sum(Analyse_2_datasæt$Erhvervsfaglig_samlet, na.rm = TRUE)
+print(paste("Gymnasial total:", gymnasial_total))
+print(paste("Erhvervsfaglig total:", erhvervsfaglig_total))                                
+                                           
+#Beregn procentsatser ud fra rækkenumre. Række 1 = Fuldført, Række 2 = Igangværende, Række 3 = Afbrudt
+gymnasial_fuldfoert <- Analyse_2_datasæt$Gymnasiale_uddannelser[1] / gymnasial_total
+gymnasial_igangvaerende <- Analyse_2_datasæt$Gymnasiale_uddannelser[2] / gymnasial_total
+gymnasial_afbrudt <- Analyse_2_datasæt$Gymnasiale_uddannelser[3] / gymnasial_total
+
+erhvervsfaglig_fuldfoert <- Analyse_2_datasæt$Erhvervsfaglig_samlet[1] / erhvervsfaglig_total
+erhvervsfaglig_igangvaerende <- Analyse_2_datasæt$Erhvervsfaglig_samlet[2] / erhvervsfaglig_total
+erhvervsfaglig_afbrudt <- Analyse_2_datasæt$Erhvervsfaglig_samlet[3] / erhvervsfaglig_total
+
+# Afrund til 4 decimaler
+gymnasial_fuldfoert <- round(gymnasial_fuldfoert, 4)
+gymnasial_igangvaerende <- round(gymnasial_igangvaerende, 4)
+gymnasial_afbrudt <- round(gymnasial_afbrudt, 4)
+erhvervsfaglig_fuldfoert <- round(erhvervsfaglig_fuldfoert, 4)
+erhvervsfaglig_igangvaerende <- round(erhvervsfaglig_igangvaerende, 4)
+erhvervsfaglig_afbrudt <- round(erhvervsfaglig_afbrudt, 4)
+
+
+##KLARGØRING AF DATA TIL POWER BI##
+# Opret PowerBI data
+powerbi_data2 <- data.frame(
+  Status = rep(c("Fuldført uddannelse", "Igangværende uddannelse", "Afbrudt uddannelse"), 2),
+  Uddannelsestype = c(rep("Gymnasial uddannelse", 3), rep("Erhvervsfaglig uddannelse", 3)),
+  Procent = c(
+    gymnasial_fuldfoert,
+    gymnasial_igangvaerende,
+    gymnasial_afbrudt,
+    erhvervsfaglig_fuldfoert,
+    erhvervsfaglig_igangvaerende,
+    erhvervsfaglig_afbrudt
+  ),
+  Procent_pct = c(
+    gymnasial_fuldfoert * 100,
+    gymnasial_igangvaerende * 100,
+    gymnasial_afbrudt * 100,
+    erhvervsfaglig_fuldfoert * 100,
+    erhvervsfaglig_igangvaerende * 100,
+    erhvervsfaglig_afbrudt * 100
+  )
+)
+
+# Afrund procent_pct til 2 decimaler
+powerbi_data2$Procent_pct <- round(powerbi_data2$Procent_pct, 2)
+
+# Se resultatet
+print("Data til PowerBI, analyse 2:")
+print(powerbi_data2)
+
+# Gem til fil
+write.csv2(powerbi_data2, "Power BI, analyse 2.csv", 
+           row.names = FALSE)
+print("Fil gemt som: Power BI, analyse 2.csv")
+                                           
+                                           
+
+
