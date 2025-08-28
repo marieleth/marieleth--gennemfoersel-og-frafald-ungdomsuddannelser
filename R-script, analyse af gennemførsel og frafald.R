@@ -232,6 +232,184 @@ write.csv2(powerbi_data2, "Power BI, analyse 2.csv",
            row.names = FALSE)
 print("Fil gemt som: Power BI, analyse 2.csv")
                                            
+##-----------------------------------------------------------------------------------------##                                          
+###ANALYSE 2b: UDVIKLING I FRAFALDSPROCENT I ODENSE OG SAMMENLIGNELIGE KOMMUNER PÅ GYMNASIALE UDDANNELSER
+
+
+##HENTE DATA##
+library(readr)
+Analyse_2b_datasæt <- read_csv("C:/Users/m_han/Desktop/Job/GitHub/Analyse af gennemførsel og frafald på danske ungdomsuddannelser – med Odense i fokus/Analyser/Analyse 2b/Analyse 2b - datasæt, rå.csv",
+                               locale = locale(),
+                               col_names = FALSE)
+View(Analyse_2b_datasæt)
+
+##TILRETTELÆGGE DATA##
+#Omdøb kolonner
+names(Analyse_2b_datasæt) <- c("Status", "Uddannelsestype", "Kommune", 
+                               "Aar_2017", "Aar_2018", "Aar_2019", 
+                               "Aar_2020", "Aar_2021", "Aar_2022", 
+                               "Aar_2023", "Aar_2024")
+
+#Opretter ny variabel med datasæt som udelukkende består af rækker hvor uddannelsesstatus er "Uddannelsesstatus i alt" (alle kolonner medtages)
+total_data <- Analyse_2b_datasæt[Analyse_2b_datasæt$Status == "Uddannelsesstatus i alt", ]
+
+#Opretter ny variabel med datasæt som udelukkende består af rækker hvor uddannelsesstatus er "Afbrudt uddannelse" (alle kolonner medtages)
+afbrudt_data <- Analyse_2b_datasæt[Analyse_2b_datasæt$Status == "Afbrudt uddannelse", ]
+
+##ANALYSE - GYMNASIALE UDDANNELSER##
+#Opret data frame med korrekte kolonner
+gymnasial_frafald <- data.frame(
+  Kommune = character(0),
+  Uddannelsestype = character(0), 
+  Aar = numeric(0),
+  Frafaldsprocent = numeric(0)
+)
+
+#Definer de specifikke kommuner + hele landet
+kommuner_liste <- c("Hele landet", "Aarhus", "Odense", "Aalborg", "Esbjerg")
+
+#Løkke til beregning af årlige frafaldsprocenter
+for(kommune in kommuner_liste) {
+  
+  #Find data for denne kommune og gymnasiale uddannelser
+  total_række <- total_data[total_data$Kommune == kommune & 
+                              total_data$Uddannelsestype == "H20 Gymnasiale uddannelser", ]
+  
+  afbrudt_række <- afbrudt_data[afbrudt_data$Kommune == kommune & 
+                                  afbrudt_data$Uddannelsestype == "H20 Gymnasiale uddannelser", ]
+  
+  #Tjek om data findes
+  if(nrow(total_række) > 0 & nrow(afbrudt_række) > 0) {
+    
+    #Beregn frafaldsprocent for hvert år
+    for(år in 2017:2024) {
+      år_kolonne <- paste0("Aar_", år)
+      
+      frafald_procent <- round((afbrudt_række[[år_kolonne]] / total_række[[år_kolonne]]), 4)
+      
+      gymnasial_frafald <- rbind(gymnasial_frafald, data.frame(
+        Kommune = kommune,
+        Uddannelsestype = "Gymnasiale uddannelser",
+        Aar = år,
+        Frafaldsprocent = frafald_procent
+      ))
+    }
+  }
+}
+
+##Tilføj sorteringskolonne, så kommuner vises i denne rækkefølge i Power BI
+library(dplyr)
+gymnasial_frafald$Kommune_Order <- case_when(
+  gymnasial_frafald$Kommune == "Hele landet" ~ 1,
+  gymnasial_frafald$Kommune == "Aarhus" ~ 2,
+  gymnasial_frafald$Kommune == "Odense" ~ 3,
+  gymnasial_frafald$Kommune == "Aalborg" ~ 4,
+  gymnasial_frafald$Kommune == "Esbjerg" ~ 5
+)
+
+#Se resultatet for gymnasiale uddannelser
+print("Frafaldsprocenter gymnasiale uddannelser:")
+print(gymnasial_frafald)
+
+##KLARGØRING AF DATA TIL POWER BI - GYMNASIALE UDDANNELSER##
+# Gem til fil
+write.csv2(gymnasial_frafald, "Power BI, analyse 2b gymnasiale.csv", 
+           row.names = FALSE)
+
+print("Fil gemt som: Power BI, analyse 2b gymnasiale.csv")
+
+##-----------------------------------------------------------------------------------------##
+###ANALYSE 2C: UDVIKLING I FRAFALDSPROCENT I ODENSE OG SAMMENLIGNELIGE KOMMUNER PÅ ERHVERVSFAGLIGE UDDANNELSER
+
+
+##HENTE DATA##
+library(readr)
+library(dplyr)
+Analyse_2c_datasæt <- read_csv("C:/Users/m_han/Desktop/Job/GitHub/Analyse af gennemførsel og frafald på danske ungdomsuddannelser – med Odense i fokus/Analyser/Analyse 2c/Analyse 2c - datasæt, rå.csv",
+                               locale = locale(encoding = "windows-1252"),
+                               col_names = FALSE)
+View(Analyse_2c_datasæt)
+
+##TILRETTELÆGGE DATA##
+#Omdøb kolonner
+names(Analyse_2c_datasæt) <- c("Status", "Uddannelsestype", "Kommune", 
+                               "Aar_2017", "Aar_2018", "Aar_2019", 
+                               "Aar_2020", "Aar_2021", "Aar_2022", 
+                               "Aar_2023", "Aar_2024")
+
+#Opretter ny variabel med datasæt som udelukkende består af rækker hvor uddannelsesstatus er "Uddannelsesstatus i alt" (alle kolonner medtages)
+total_data <- Analyse_2c_datasæt[Analyse_2c_datasæt$Status == "Uddannelsesstatus i alt", ]
+
+#Opretter ny variabel med datasæt som udelukkende består af rækker hvor uddannelsesstatus er "Afbrudt uddannelse" (alle kolonner medtages)
+afbrudt_data <- Analyse_2c_datasæt[Analyse_2c_datasæt$Status == "Afbrudt uddannelse", ]
+
+##ANALYSE - ERHVERVSFAGLIGE UDDANNELSER##
+#Opret data frame med korrekte kolonner
+erhvervsfaglig_frafald <- data.frame(
+  Kommune = character(0),
+  Uddannelsestype = character(0), 
+  Aar = numeric(0),
+  Frafaldsprocent = numeric(0)
+)
+
+#Definer de specifikke kommuner + hele landet
+kommuner_liste <- c("Hele landet", "Aarhus", "Odense", "Aalborg", "Esbjerg")
+
+#Løkke til beregning af årlige frafaldsprocenter
+for(kommune in kommuner_liste) {
+  
+  total_række <- total_data %>%
+    filter(Kommune == kommune, 
+           grepl("H29|H30", Uddannelsestype)) %>%
+    summarise(Kommune = kommune,
+              across(starts_with("Aar_"), sum, na.rm = TRUE))
+  
+  afbrudt_række <- afbrudt_data %>%
+    filter(Kommune == kommune, 
+           grepl("H29|H30", Uddannelsestype)) %>%
+    summarise(Kommune = kommune,
+              across(starts_with("Aar_"), sum, na.rm = TRUE))
+  
+  #Tjek om data findes
+  if(nrow(total_række) > 0 & nrow(afbrudt_række) > 0) {
+    
+    #Beregn frafaldsprocent for hvert år
+    for(år in 2017:2024) {
+      år_kolonne <- paste0("Aar_", år)
+      
+      frafald_procent <- round((afbrudt_række[[år_kolonne]] / total_række[[år_kolonne]]), 4)
+      
+      erhvervsfaglig_frafald <- rbind(erhvervsfaglig_frafald, data.frame(
+        Kommune = kommune,
+        Uddannelsestype = "Erhvervsfaglige uddannelser",
+        Aar = år,
+        Frafaldsprocent = frafald_procent
+      ))
+    }
+  }
+}
+
+##Tilføj sorteringskolonne, så kommuner vises i denne rækkefølge i Power BI
+library(dplyr)
+erhvervsfaglig_frafald$Kommune_Order <- case_when(
+  erhvervsfaglig_frafald$Kommune == "Hele landet" ~ 1,
+  erhvervsfaglig_frafald$Kommune == "Aarhus" ~ 2,
+  erhvervsfaglig_frafald$Kommune == "Odense" ~ 3,
+  erhvervsfaglig_frafald$Kommune == "Aalborg" ~ 4,
+  erhvervsfaglig_frafald$Kommune == "Esbjerg" ~ 5
+)
+
+#Se resultatet for gymnasiale uddannelser
+print("Frafaldsprocenter erhvervsfaglige uddannelser:")
+print(erhvervsfaglig_frafald)
+
+##KLARGØRING AF DATA TIL POWER BI - GYMNASIALE UDDANNELSER##
+# Gem til fil
+write.csv2(erhvervsfaglig_frafald, "Power BI, analyse 2c erhvervsfaglige.csv", 
+           row.names = FALSE)
+
+print("Fil gemt som: Power BI, analyse 2c erhvervsfaglige.csv")
                                            
+
 
 
