@@ -7,7 +7,7 @@
 
 ##HENTE DATA##
 library(readr)
-Analyse_1_datasæt <- read_csv("C:/Users/m_han/Desktop/Job/GitHub/Analyse af gennemførsel og frafald på danske ungdomsuddannelser – med Odense i fokus/Analyser/Analyse 1/Analyse 1 - datasæt, rå.csv", 
+Analyse_1_datasæt <- read_csv("Data/Rå data/Analyse 1 - datasæt, rå.csv", 
                               locale = locale())
 
 ##TILRETTELÆGGE DATA##
@@ -170,7 +170,7 @@ print("Power BI, analyse 1c bund-10 lavest frafald.csv")
 
 ##HENTE DATA##
 library(readr)
-Analyse_2_datasæt <- read_csv("C:/Users/m_han/Desktop/Job/GitHub/Analyse af gennemførsel og frafald på danske ungdomsuddannelser – med Odense i fokus/Analyser/Analyse 2/Analyse 2 - datasæt, rå.csv",
+Analyse_2_datasæt <- read_csv("Data/Rå data/Analyse 2 - datasæt, rå.csv",
                               locale = locale())
 View(Analyse_2_datasæt)
 
@@ -257,7 +257,7 @@ print("Fil gemt som: Power BI, analyse 2.csv")
 
 ##HENTE DATA##
 library(readr)
-Analyse_2b_datasæt <- read_csv("C:/Users/m_han/Desktop/Job/GitHub/Analyse af gennemførsel og frafald på danske ungdomsuddannelser – med Odense i fokus/Analyser/Analyse 2b/Analyse 2b - datasæt, rå.csv",
+Analyse_2b_datasæt <- read_csv("Data/Rå data/Analyse 2b - datasæt, rå.csv",
                                locale = locale(),
                                col_names = FALSE)
 View(Analyse_2b_datasæt)
@@ -344,7 +344,7 @@ print("Fil gemt som: Power BI, analyse 2b gymnasiale.csv")
 ##HENTE DATA##
 library(readr)
 library(dplyr)
-Analyse_2c_datasæt <- read_csv("C:/Users/m_han/Desktop/Job/GitHub/Analyse af gennemførsel og frafald på danske ungdomsuddannelser – med Odense i fokus/Analyser/Analyse 2c/Analyse 2c - datasæt, rå.csv",
+Analyse_2c_datasæt <- read_csv("Data/Rå data/Analyse 2c - datasæt, rå.csv",
                                locale = locale(encoding = "windows-1252"),
                                col_names = FALSE)
 View(Analyse_2c_datasæt)
@@ -434,7 +434,7 @@ print("Fil gemt som: Power BI, analyse 2c erhvervsfaglige.csv")
 
 ##HENTE DATA##
 library(readr)
-Analyse_3_datasæt <- read_csv("C:/Users/m_han/Desktop/Job/GitHub/Analyse af gennemførsel og frafald på danske ungdomsuddannelser – med Odense i fokus/Analyser/Analyse 3/Analyse 3 - datasæt, rå.csv",
+Analyse_3_datasæt <- read_csv("Data/Rå data/Analyse 3 - datasæt, rå.csv",
                               locale = locale())
 ##TILRETTELÆGGE DATA##
 #Oprettelse af variable ud fra kolonnenumre
@@ -537,7 +537,7 @@ print("Fil gemt som: Power BI, analyse 3.csv")
 
 ##HENTE DATA##
 library(readr)
-Analyse_4_datasæt <- read_csv("C:/Users/m_han/Desktop/Job/GitHub/Analyse af gennemførsel og frafald på danske ungdomsuddannelser – med Odense i fokus/Analyser/Analyse 4/Analyse 4 - datasæt, rå.csv",
+Analyse_4_datasæt <- read_csv("Data/Rå data/Analyse 4 - datasæt, rå.csv",
                               locale = locale())
 
 View(Analyse_4_datasæt)
@@ -687,7 +687,7 @@ print("Fil gemt som: Power BI, analyse 4.csv")
 
 ##HENTE DATA##
 library(readr)
-Analyse_5_datasæt <- read_csv("C:/Users/m_han/Desktop/Job/GitHub/Analyse af gennemførsel og frafald på danske ungdomsuddannelser – med Odense i fokus/Analyser/Analyse 5/Analyse 5 - datasæt, rå.csv",
+Analyse_5_datasæt <- read_csv("Data/Rå data/Analyse 5 - datasæt, rå.csv",
                               locale = locale(),
                               col_names = FALSE)
 View(Analyse_5_datasæt)
