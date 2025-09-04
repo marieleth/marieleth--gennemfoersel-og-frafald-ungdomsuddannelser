@@ -6,7 +6,7 @@
 - Dataen fra Danmarks Statistik er først analyseret i R, og daten er herefter gemt i csv-filer. Ud fra denne data er Power BI-dashboardet udarbejdet.
 - Projektet belyser centrale spørgsmål omkring uddannelsesfrafald: Hvor stor en andel af de unge afbryder deres uddannelse i Odense? Hvilke forskelle findes der mellem gymnasiale og erhvervsfaglige uddannelser? Hvordan har frafaldsprocenten udviklet sig på gymnasiale og erhvervsfaglige uddannelser siden 2017? Hvordan varierer frafaldsmønstrene på tværs af køn, herkomst og forældres uddannelsesniveau? Hvordan klarer Odense sig sammenlignet med andre danske kommuner?
 
-##Indhold
+## Indhold
 - Data: Indeholder rå data downloadet fra Danmarks Statistik samt bearbejdet data efter analyse i R.
 - Power BI: Indeholder Dahboard i pbix-format og pdf-format - Dashboard Power BI - Analyse af gennemførsel og frafald.pbix og Dashboard Power BI - Analyse af gennemførsel og frafald.pdf 
 - R-script, analyse af gennemførsel og frafald.R : R-koder til dataanalysen
