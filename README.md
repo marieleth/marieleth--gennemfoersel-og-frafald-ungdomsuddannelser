@@ -7,10 +7,10 @@
 - Projektet belyser centrale spørgsmål omkring uddannelsesfrafald: Hvor stor en andel af de unge afbryder deres uddannelse i Odense? Hvilke forskelle findes der mellem gymnasiale og erhvervsfaglige uddannelser i Odense? Hvordan har frafaldsprocenten udviklet sig på gymnasiale og erhvervsfaglige uddannelser siden 2017 i Odense og en række andre kommuner? Hvordan varierer frafaldsmønstrene på tværs af køn, herkomst og forældres uddannelsesniveau? 
 
 ## Indhold
-- Data: Indeholder rå data downloadet fra Danmarks Statistik samt bearbejdet data efter analyse i R.
-- Power BI: Indeholder Power BI rapport i pbix-format og pdf-format
-- R-script, analyse af gennemførsel og frafald.R : R-koder til dataanalysen
-- README.md: Denne fil
+- Data-mappe: Indeholder rå data downloadet fra Danmarks Statistik samt bearbejdet data efter analyse i R.
+- Power BI-mappe: Indeholder Power BI rapport i pbix-format og pdf-format
+- `R-script, analyse af gennemførsel og frafald.R` : R-koder til dataanalysen
+- `README.md`: Denne fil
 
 ## Oversigt over Power BI rapport
 Rapporten består af fem sider:
