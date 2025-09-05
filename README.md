@@ -47,5 +47,5 @@ Kør R-scriptet:
 - Opdater datakilder til at pege på de genererede CSV-filer
 
 ## Kontakt
-Har du spørgsmål til projektet, er du velkommen til at skrive til mig på marielhansen94@gmail.com
+Har du spørgsmål til projektet, er du velkommen til at skrive til mig på marieleth.mail@gmail.com
 
