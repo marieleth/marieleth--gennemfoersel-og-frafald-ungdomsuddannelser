@@ -43,7 +43,7 @@ Kør R-scriptet:
 - Kør scriptet for at generere CSV-filer til Power BI
 
 Åbn Power BI rapporten: 
-- Åbn Power BI rapporten Analyse af gennemførsel og frafald.pbix i Power BI Desktop
+- Åbn Power BI rapporten Power Bi rapport - Analyse af gennemførsel og frafald.pbix i Power BI Desktop
 - Opdater datakilder til at pege på de genererede CSV-filer
 
 ## Kontakt
